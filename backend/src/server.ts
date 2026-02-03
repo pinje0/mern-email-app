@@ -24,12 +24,16 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-// Connect to database and start server
+// Connect to database
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`API URL: http://localhost:${PORT}/api`);
-  });
+  console.log('Database connected');
+  // Only start server locally (not on Vercel)
+  if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`API URL: http://localhost:${PORT}/api`);
+    });
+  }
 });
 
 export default app;
