@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar as BigCalendar, dateFnsLocalizer, Views } from 'react-big-calendar';
-import { format, parse, startOfWeek, getDay, addMonths, subMonths } from 'date-fns';
+import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import type { EmailSchedule, CreateEmailData } from '../types';
@@ -141,13 +141,6 @@ const Calendar: React.FC = () => {
         >
           + Create New Email
         </button>
-      </div>
-
-      <div className="calendar-toolbar">
-        <button onClick={() => setCurrentDate(subMonths(currentDate, 1))}>Back</button>
-        <span className="current-month">{format(currentDate, 'MMMM yyyy')}</span>
-        <button onClick={() => setCurrentDate(addMonths(currentDate, 1))}>Next</button>
-        <button onClick={() => setCurrentDate(new Date())}>Today</button>
       </div>
 
       <div className="calendar-wrapper">
