@@ -12,6 +12,10 @@ export const connectDB = async (): Promise<typeof mongoose> => {
       throw new Error('MONGODB_URI is not defined');
     }
 
+    // Debug: Log connection string (mask password)
+    const maskedURI = mongoURI.replace(/:([^@]+)@/, ':****@');
+    console.log('🔌 Attempting MongoDB connection to:', maskedURI);
+
     // If we have a cached connection, use it
     if (cachedConnection && cachedConnection.connection.readyState === 1) {
       console.log('✅ Using cached MongoDB connection');
@@ -26,12 +30,15 @@ export const connectDB = async (): Promise<typeof mongoose> => {
     };
 
     // Create new connection
+    console.log('⏳ Connecting to MongoDB...');
     cachedConnection = await mongoose.connect(mongoURI, options);
     console.log('✅ MongoDB connected successfully');
     
     return cachedConnection;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
+  } catch (error: any) {
+    console.error('❌ MongoDB connection error:', error.message);
+    console.error('Error code:', error.code);
+    console.error('Error reason:', error.reason);
     throw error;
   }
 };
