@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { EmailSchedule, CreateEmailData } from '../types';
-import { emailAPI } from '../services/api';
+import { api } from '../lib/api';
 import EmailModal from '../components/EmailModal';
 
 const EmailList: React.FC = () => {
@@ -15,7 +15,7 @@ const EmailList: React.FC = () => {
 
   const fetchEmails = async () => {
     try {
-      const response = await emailAPI.getAll();
+      const response = await api.get<EmailSchedule[]>('/emails');
       setEmails(response.data);
     } catch (error) {
       console.error('Failed to fetch emails:', error);
@@ -24,7 +24,7 @@ const EmailList: React.FC = () => {
 
   const handleCreateEmail = async (data: CreateEmailData) => {
     try {
-      await emailAPI.create(data);
+      await api.post('/emails', data);
       await fetchEmails();
       setIsModalOpen(false);
     } catch (error) {
@@ -35,7 +35,7 @@ const EmailList: React.FC = () => {
 
   const handleUpdateEmail = async (id: string, data: CreateEmailData) => {
     try {
-      await emailAPI.update(id, data);
+      await api.put(`/emails/${id}`, data);
       await fetchEmails();
       setIsModalOpen(false);
       setSelectedEmail(null);
@@ -49,7 +49,7 @@ const EmailList: React.FC = () => {
     if (!window.confirm('Are you sure you want to delete this email?')) return;
     
     try {
-      await emailAPI.delete(id);
+      await api.delete(`/emails/${id}`);
       await fetchEmails();
     } catch (error) {
       console.error('Failed to delete email:', error);
@@ -59,7 +59,7 @@ const EmailList: React.FC = () => {
   const handleSendEmail = async (id: string) => {
     setIsLoading(true);
     try {
-      await emailAPI.send(id);
+      await api.post(`/emails/${id}/send`);
       await fetchEmails();
       alert('Email sent successfully!');
     } catch (error) {

@@ -67,12 +67,14 @@ VITE_API_URL=http://localhost:5000/api
 ## 🎨 Features
 
 ### Authentication
+
 - Login form with email/password
 - JWT token stored in localStorage
 - Automatic redirect to login if token expires
 - Logout functionality with timestamp recording
 
 ### Calendar View (`/calendar`)
+
 - Monthly calendar display using react-big-calendar
 - Click on date to create new email
 - Click on event to edit existing email
@@ -80,6 +82,7 @@ VITE_API_URL=http://localhost:5000/api
 - Navigation: Today, Back, Next buttons
 
 ### Email List View (`/emails`)
+
 - Table display of all email schedules
 - Columns: Email, Date, Description, Status, Actions
 - Status badges (pending, sent, failed)
@@ -87,6 +90,7 @@ VITE_API_URL=http://localhost:5000/api
 - Responsive design
 
 ### Email Modal
+
 - Create new or edit existing email
 - Form fields: Email, Date, Description
 - Send Now button (for immediate sending)
@@ -95,12 +99,12 @@ VITE_API_URL=http://localhost:5000/api
 
 ## 🛣️ Routes
 
-| Route | Component | Auth Required | Description |
-|-------|-----------|---------------|-------------|
-| `/` | Redirect | - | Redirects to login or calendar |
-| `/login` | Login | No | Login page |
-| `/calendar` | Calendar | Yes | Calendar view of emails |
-| `/emails` | EmailList | Yes | List view of all emails |
+| Route       | Component | Auth Required | Description                    |
+| ----------- | --------- | ------------- | ------------------------------ |
+| `/`         | Redirect  | -             | Redirects to login or calendar |
+| `/login`    | Login     | No            | Login page                     |
+| `/calendar` | Calendar  | Yes           | Calendar view of emails        |
+| `/emails`   | EmailList | Yes           | List view of all emails        |
 
 ## 🔌 API Integration
 
@@ -109,11 +113,13 @@ The frontend uses Axios for API calls:
 **Base URL:** Configured via `VITE_API_URL` environment variable
 
 **Authentication:** JWT token automatically added to headers:
+
 ```javascript
 Authorization: Bearer <token>
 ```
 
 **Interceptors:**
+
 - Request interceptor adds auth token
 - Response interceptor handles 401 errors (redirects to login)
 
@@ -130,6 +136,7 @@ Authorization: Bearer <token>
   - `.modal-content` - Modal content
 
 ### Status Colors
+
 - **Pending** (Orange): `#f39c12`
 - **Sent** (Green): `#27ae60`
 - **Failed** (Red): `#e74c3c`
@@ -137,12 +144,14 @@ Authorization: Bearer <token>
 ## 🧩 Components
 
 ### Navbar
+
 - Shows app name/logo
 - Welcome message with user name
 - Navigation links (Calendar, Email List)
 - Logout button
 
 ### EmailModal
+
 - Props:
   - `isOpen` - Show/hide modal
   - `selectedDate` - Pre-filled date
@@ -153,12 +162,14 @@ Authorization: Bearer <token>
 - Loading states for async operations
 
 ### Calendar
+
 - Uses `react-big-calendar` library
 - Configured with date-fns localizer
 - Events mapped from email data
 - Timezone-safe date handling
 
 ### EmailList
+
 - Table with all email schedules
 - Sortable/filterable (future feature)
 - Action buttons for each row
@@ -167,21 +178,25 @@ Authorization: Bearer <token>
 ## 📦 Dependencies
 
 **Core:**
+
 - react - UI library
 - react-dom - DOM rendering
 - react-router-dom - Routing
 - axios - HTTP client
 
 **UI Components:**
+
 - react-big-calendar - Calendar component
 - date-fns - Date utilities
 
 **Build Tools:**
+
 - vite - Build tool
 - typescript - TypeScript compiler
 - @vitejs/plugin-react-swc - React plugin
 
 **Types:**
+
 - @types/react
 - @types/react-dom
 - @types/react-big-calendar
@@ -191,15 +206,18 @@ Authorization: Bearer <token>
 ### Common Issues
 
 **Calendar not displaying:**
+
 - Check if `react-big-calendar` CSS is imported
 - Verify date-fns locale configuration
 
 **API calls failing:**
+
 - Check `VITE_API_URL` in `.env`
 - Ensure backend is running
 - Check browser console for CORS errors
 
 **Authentication issues:**
+
 - Clear localStorage and re-login
 - Check JWT token expiry
 - Verify backend auth endpoints
@@ -207,18 +225,12 @@ Authorization: Bearer <token>
 ### Development Tools
 
 **Browser Extensions:**
+
 - React Developer Tools
 - Redux DevTools (if using Redux in future)
 
 **Network Debugging:**
+
 - Use browser Network tab to inspect API calls
 - Check request/response headers
 - Verify JWT token is sent correctly
-
-## 🔮 Future Improvements
-
-See `AGENTS.md` in root directory for planned features:
-- UI/UX improvements
-- Deployment to Vercel
-- Production database setup
-- Email scheduling automation

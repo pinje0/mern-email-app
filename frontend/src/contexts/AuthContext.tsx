@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { authAPI } from '../services/api';
+import { api } from '../lib/api';
 import type { User } from '../types';
 
 interface AuthContextType {
@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        const response = await authAPI.getCurrentUser();
+        const response = await api.get('/auth/me');
         setUser(response.data);
       } catch (error) {
         localStorage.removeItem('token');
@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const login = async (email: string, password: string) => {
-    const response = await authAPI.login({ email, password });
+    const response = await api.post('/auth/login', { email, password });
     const { token, user } = response.data;
     localStorage.setItem('token', token);
     setUser({
@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = async () => {
     try {
-      await authAPI.logout();
+      await api.post('/auth/logout');
     } catch (error) {
       console.error('Logout error:', error);
     }
