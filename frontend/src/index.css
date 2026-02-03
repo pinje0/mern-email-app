@@ -315,6 +315,44 @@ button[type="submit"]:disabled {
   box-shadow: var(--shadow-soft);
 }
 
+.calendar-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--cream);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.calendar-toolbar button {
+  padding: 0.625rem 1.25rem;
+  background: white;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  color: var(--charcoal);
+  font-family: inherit;
+}
+
+.calendar-toolbar button:hover {
+  background: var(--coral-light);
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+.current-month {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  min-width: 200px;
+  text-align: center;
+  flex: 1;
+}
+
 .calendar-wrapper {
   background: white;
   border-radius: var(--radius);
