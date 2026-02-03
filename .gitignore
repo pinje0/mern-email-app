@@ -53,5 +53,6 @@ frontend/.env
 
 # Project context file (contains sensitive info for AI assistants)
 AGENTS.md
+DEPLOYMENT.md
 
 nul
