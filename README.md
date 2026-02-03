@@ -23,6 +23,30 @@ Then open http://localhost:5173 and login with:
 - **Email**: test@example.com
 - **Password**: password123
 
+## 🌐 Live Demo
+
+**Deployed Application:**
+- **Frontend**: https://fe-mern-email-app.vercel.app
+- **Backend API**: https://be-mern-email-app.vercel.app
+
+**Test Credentials:**
+- Email: `test@example.com`
+- Password: `password123`
+
+### 📧 Email Testing with Mailtrap
+
+This application uses [Mailtrap](https://mailtrap.io) for safe email testing. When you send an email through the app, it gets captured in the Mailtrap inbox rather than sent to real email addresses.
+
+**How to verify email sending:**
+1. Login to the deployed app
+2. Create or select an email schedule
+3. Click "Send Now"
+4. Check the Mailtrap inbox screenshot below:
+
+![Mailtrap Inbox Screenshot](docs/mailtrap-inbox.png)
+
+*The screenshot shows the "Hi Salam kenal" email template successfully delivered to the Mailtrap testing inbox.*
+
 ## ✨ Features
 
 - **User Authentication**: Login/logout functionality with timestamps recorded in the database
@@ -297,25 +321,6 @@ EMAIL_USER=your_gmail@gmail.com
 EMAIL_PASS=your_gmail_app_password
 EMAIL_FROM="MERN Email App" <your_gmail@gmail.com>
 ```
-
-## 👤 Dummy Account for Login
-
-After seeding the database, use this test account:
-
-- **Email**: `test@example.com`
-- **Password**: `password123`
-
-**How to seed:**
-```bash
-curl http://localhost:5000/api/auth/seed
-```
-
-Or visit: http://localhost:5000/api/auth/seed
-
-The seed endpoint creates a user with:
-- Hashed password (bcrypt)
-- Name: "Test User"
-- Empty login/logout timestamp arrays
 
 ## 🔌 API Endpoints
 
