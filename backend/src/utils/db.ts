@@ -1,25 +1,48 @@
 import mongoose from 'mongoose';
 
-export const connectDB = async (): Promise<void> => {
+// Cache the connection for serverless environments
+let cachedConnection: typeof mongoose | null = null;
+
+export const connectDB = async (): Promise<typeof mongoose> => {
   try {
     const mongoURI = process.env.MONGODB_URI;
     
     if (!mongoURI) {
       console.error('❌ ERROR: MONGODB_URI is not defined in environment variables');
-      console.error('Please set MONGODB_URI in your Vercel Dashboard Environment Variables');
       throw new Error('MONGODB_URI is not defined');
     }
 
-    await mongoose.connect(mongoURI);
+    // If we have a cached connection, use it
+    if (cachedConnection) {
+      console.log('✅ Using cached MongoDB connection');
+      return cachedConnection;
+    }
+
+    // Connection options optimized for serverless/Vercel
+    const options = {
+      maxPoolSize: 1, // Reduce pool size for serverless
+      serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      bufferCommands: false, // Disable buffering for serverless
+      // Add these for better serverless compatibility
+      bufferMaxEntries: 0,
+      connectTimeoutMS: 10000,
+    };
+
+    // Create new connection
+    cachedConnection = await mongoose.connect(mongoURI, options);
     console.log('✅ MongoDB connected successfully');
+    
+    return cachedConnection;
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
-    // Don't exit process on Vercel - let it show the error
-    if (process.env.NODE_ENV !== 'production') {
-      process.exit(1);
-    }
     throw error;
   }
+};
+
+// Check if database is connected
+export const isDBConnected = (): boolean => {
+  return mongoose.connection.readyState === 1;
 };
 
 export default connectDB;
