@@ -8,25 +8,21 @@ export const connectDB = async (): Promise<typeof mongoose> => {
     const mongoURI = process.env.MONGODB_URI;
     
     if (!mongoURI) {
-      console.error('❌ ERROR: MONGODB_URI is not defined in environment variables');
+      console.error('❌ ERROR: MONGODB_URI is not defined');
       throw new Error('MONGODB_URI is not defined');
     }
 
     // If we have a cached connection, use it
-    if (cachedConnection) {
+    if (cachedConnection && cachedConnection.connection.readyState === 1) {
       console.log('✅ Using cached MongoDB connection');
       return cachedConnection;
     }
 
     // Connection options optimized for serverless/Vercel
     const options = {
-      maxPoolSize: 1, // Reduce pool size for serverless
-      serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      bufferCommands: false, // Disable buffering for serverless
-      // Add these for better serverless compatibility
-      bufferMaxEntries: 0,
-      connectTimeoutMS: 10000,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
     };
 
     // Create new connection
