@@ -357,12 +357,8 @@ Network Error
 
 - See `backend/README.md` for backend-specific details
 - See `frontend/README.md` for frontend-specific details
-- See `AGENTS.md` for project context and future improvements
 
 ## 📝 License
 
 This project is created for a technical test assignment.
 
-## 🤝 Contributing
-
-This is a technical test project. For improvements, see `AGENTS.md` for planned features.
